@@ -1,2 +1,2 @@
 init();
-[B,L,stats,croppedImage]= cutKuevetten(images{1});
+[B,L,stats,croppedImage, BB]= cutKuevetten(images{1});

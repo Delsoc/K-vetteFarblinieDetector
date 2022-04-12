@@ -1,4 +1,4 @@
-function [B,L,stats, croppedImage] = cutKuevetten(RGB)
+function [B,L,stats, croppedImage, BB] = cutKuevetten(RGB)
     threshold = 0.06; %getestet
 
     %--read image in RGB
@@ -50,11 +50,14 @@ function [B,L,stats, croppedImage] = cutKuevetten(RGB)
     for k = 1 : length(stats)
         BB = stats(k).BoundingBox;
         rectangle('Position', [BB(1),BB(2),BB(3),BB(4)],'EdgeColor','r','LineWidth',2);
+        figure;
+        croppedImage{k} = imcrop(RGB, [BB(1) BB(2) BB(3) BB(4)]);
+        imshow(croppedImage{k});
     end
-    figure;
+    
 
-    croppedImage = imcrop(RGB, [BB(1) BB(2) BB(3) BB(4)]);
-    imshow(croppedImage);
+    
+    
     
     %estimate each object´s area and perimeter. use these results to form a
     %simple metric indicating the roundness of an object:
