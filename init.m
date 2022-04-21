@@ -1,6 +1,10 @@
 clear;
 close all;
 
+% load camera parameter for undistortion
+load cameraPamams.mat;
+
+
 %fixed parameters
 folderNameLastPart = "29.01.2022-18%3A27";
 versuchsbilderOrdnerName = "Versuchsbilder\";
