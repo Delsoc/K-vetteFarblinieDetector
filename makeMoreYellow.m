@@ -1,4 +1,5 @@
-function [newimg] = makeMoreYellow(img)    
+function [newimg] = makeMoreYellow(img)   
+    %%%figure, hold on, imshow(img);
     %img = imread('image55.jpg');
     %subplot(2, 2, 1);
     %imshow(img);
@@ -26,6 +27,7 @@ function [newimg] = makeMoreYellow(img)
     newimg = cat(3, red, green, blue);
     %subplot(2, 2, 3);
     %imshow(newimg);
+    %%%figure, hold on, imshow(newimg);
     %title('Changed Image', 'FontSize', 20);
     %drawnow;
     %imwrite(newimg,"newImage.jpg");
