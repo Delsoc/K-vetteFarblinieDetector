@@ -1,6 +1,6 @@
 init();
 
-image = images{10};
+image = images{1};
 %image = imread("newImage.jpg");
 figure,imshow(image), hold on;
 figure

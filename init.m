@@ -23,8 +23,11 @@ end
 
 %read images
 try
-    imagefiles = dir(append(versuchsbilderOrdnerName,folderFiles.name,'\*.jpg'));      
+    imagefiles = dir(append(versuchsbilderOrdnerName,folderFiles.name,'\*.jpg'));    
     nfiles = length(imagefiles);    % Number of files found
+    %sort Images
+    [~, reindex] = sort( str2double( regexp( {imagefiles.name}, '\d+', 'match', 'once' )));
+    imagefiles = imagefiles(reindex);
     for ii=1:nfiles
        currentfilename = imagefiles(ii).name;
        currentimage = imread(append(versuchsbilderOrdnerName,folderFiles.name,'\',currentfilename));

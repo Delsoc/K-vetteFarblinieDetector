@@ -1,4 +1,4 @@
-function [newimg] = makeMoreYellow(img)   
+function [newimg] = makeMoreYellow(img)
     %%%figure, hold on, imshow(img);
     %img = imread('image55.jpg');
     %subplot(2, 2, 1);
@@ -10,7 +10,7 @@ function [newimg] = makeMoreYellow(img)
     green = img(:, :, 2);
     blue = img(:, :, 3);
     %create a mask same size as image that indicates 'yellow' pixels
-    isyellow = red > 78;
+    isyellow = red > 25; %78
     %isyellow = red > 18;
     % Extract the largest blob only
     %isyellow = bwareafilt(isyellow, 1);
