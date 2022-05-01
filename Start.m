@@ -1,12 +1,15 @@
 init();
 
+%93px=3mm / 1px = 32,258 μm
+
 image = images{1};
 %image = imread("newImage.jpg");
 figure,imshow(image), hold on;
 figure
+image = undistortImage(image, cameraParams);
 image = makeMoreYellow(image); %TODO: should be done in init() or an extra prepare method
 %figure,hold on, imshow(image);
-image = undistortImage(image, cameraParams);
+
 %figure,hold on, imshow(image);
 stats = getBoundingBoxes(image); %TODO (noch sicherer): wenn 10 nicht erkannt werden sollten, dann solange weiter versuchen (mit anderen Bildern), bis 10 Objekte gefunden wurden
 stats = adjustBoundingBoxes(stats);

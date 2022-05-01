@@ -28,7 +28,7 @@ for i=1:2:laenge_BKanten
 
     %c()
     Gedreht = kuvDrehen(temp); %dreht glass
-    figure("Name","c() Gedrehtes Ausgeschnittenes Bild"); imagesc(Gedreht); colormap(gray);
+     figure("Name","c() Gedrehtes Ausgeschnittenes Bild"); imagesc(Gedreht); colormap(gray);
     
     %d()
     [ErsteLinie,MittlereLiniePX,UntereLinie]=OMU_KantenFinden(Gedreht); %Finded die 3 kanten
@@ -44,3 +44,4 @@ Abw = ["Standartabweichung von mm",std(MMuProz(:,1))];
 disp(Abw);
 Abw = ["Standartabweichung von %",std(MMuProz(:,2))];
 disp(Abw);
+debugPoint=2;
