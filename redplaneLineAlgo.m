@@ -4,11 +4,18 @@ function [calculatedHeight] = redplaneLineAlgo(RGB)
     %figure; hold on; imshow(RGB); 
     R = RGB(:,:,1);
     %image(R), colormap([[0:1/255:1]', zeros(256,1), zeros(256,1)]), colorbar;
-    %figure; hold on; imshow(R); 
+    figure; hold on; imshow(R); 
+
+
+    %test linescan
+    %figure, imshow(R);hold on;
+    %[hoehe,breite] = size(R);
+    %GwertLinie = R(:,round(breite/2));
+    %figure, plot(GwertLinie,'r','LineWidth',0.5), hold on;
 
     %schwarz-weiß Bild
     bw = im2bw(R, 0.3);
-    %figure; hold on; imshow(bw);
+    figure; hold on; imshow(bw);
     
     y = rows;
     value = 0;
