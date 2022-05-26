@@ -24,7 +24,7 @@ for img=1 : length(images)
         [rows, columns, numberOfColorChannels] = size(croppedMoreYellowImages{croppedImg});
     
         %houghAlgo
-        calculatedHeight = houghAlgo(croppedMoreYellowImages{croppedImg});
+        calculatedHeight = houghAlgo3(croppedUndistortedImages{croppedImg}(:,:,1));
         line([0 columns],[calculatedHeight calculatedHeight],'Color','r','LineWidth',2);
         figure, imshow(croppedUndistortedImages{croppedImg}), hold on;
         line([0 columns],[calculatedHeight calculatedHeight],'Color','r','LineWidth',2);
