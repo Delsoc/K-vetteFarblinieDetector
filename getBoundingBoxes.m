@@ -1,4 +1,4 @@
-function [stats] = cutKuevetten(RGB)
+function [stats,centroids] = cutKuevetten(RGB)
     %threshold = 0.06; %getestet
     threshold = 0.07; %getestet
 
@@ -46,6 +46,7 @@ function [stats] = cutKuevetten(RGB)
     
     [bwLabel,num] = bwlabel(bw,8);
     stats = regionprops(bwLabel, 'BoundingBox');
+    centroids = regionprops(bw,'centroid');
 
     imshow(RGB);
     %hold on;
