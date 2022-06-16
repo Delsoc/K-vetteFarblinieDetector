@@ -3,7 +3,7 @@
 
 function [H,S,V]=farbbioN(I)
 
-figure, imshow(I);
+%%%figure, imshow(I);
 %I=rgb2hsv(I);
 
 %figure, imagesc(I(:,:,1));title('Farbton'); colormap(gray);

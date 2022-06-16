@@ -16,6 +16,7 @@ function [calculatedHeight] = houghAlgo3(RGB)
     Bimage = imcomplement(Img2);
     %figure, hold on, imshow(Bimage);
     BW = edge(Bimage,'prewitt');
+    BW = imcrop(BW, [0 rows*0.25 columns rows*0.75]);
     %figure, hold on, imshow(Bimage);
     point = 2;
     %%%imshow(Bimage);
@@ -32,7 +33,7 @@ function [calculatedHeight] = houghAlgo3(RGB)
     x = theta(P(:,2));
     y = rho(P(:,1));
     lines = houghlines(BW, theta, rho, P, 'FillGap',6,'MinLength',4);
-    figure, imshow(RGB), hold on;
+    %%%figure, imshow(RGB), hold on;
     max_len = 0;
     calculatedHeight = 0;
     countedHeightPoints = 0;
@@ -44,15 +45,15 @@ function [calculatedHeight] = houghAlgo3(RGB)
         y1 = xy(1,2);
         y2 = xy(2,2);
         lineFocusWeight = (y1 + y2)/2;
-        plot(xy(:,1),xy(:,2),'LineWidth',2);
-        if (lineFocusWeight < (0.85 * rows) && lineFocusWeight > (0.25) * rows)
-            calculatedHeight = calculatedHeight + lineFocusWeight;
+        %%%plot(xy(:,1),xy(:,2),'LineWidth',2);
+        if ((lineFocusWeight < (0.90 * rows)) && (lineFocusWeight > (0) * rows))
+            calculatedHeight = calculatedHeight + lineFocusWeight + rows*0.25;
             countedHeightPoints = countedHeightPoints + 1; 
-            plot(xy(:,1),xy(:,2),'LineWidth',2);
+            %%%plot(xy(:,1),xy(:,2),'LineWidth',2);
         end
 
-        plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
-        plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
+        %%%plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+        %%%plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
     
         len = norm(lines(k).point1 - lines(k).point2);
        if ( len > max_len)

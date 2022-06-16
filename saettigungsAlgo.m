@@ -7,10 +7,10 @@ function [detectedHeight] = saettigungsAlgo(RGB)
     %figure,imshow(V), hold on;
 
     grayImg = im2gray(H);
-    figure, imshow(grayImg);hold on;
+    %%%figure, imshow(grayImg);hold on;
     [hoehe,breite] = size(grayImg);
     GwertLinie = grayImg(:,round(breite/2));
-    figure, plot(GwertLinie,'r','LineWidth',0.5), hold on;
+    %%%figure, plot(GwertLinie,'r','LineWidth',0.5), hold on;
     
     for i=60 : length(GwertLinie)
         copyGwertLinie(i-59,1) = GwertLinie(i,1);

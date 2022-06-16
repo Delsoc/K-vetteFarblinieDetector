@@ -1,1 +1,0 @@
-load cameraPamams.mat;

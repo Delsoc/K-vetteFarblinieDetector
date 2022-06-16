@@ -2,7 +2,7 @@ clear;
 close all;
 
 % load camera parameter for undistortion
-load cameraPamams.mat;
+load cameraParams.mat;
 
 
 %fixed parameters

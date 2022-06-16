@@ -9,7 +9,7 @@ function [stats] = adjustBoundingBoxes(stats)
         field = stats(k).(fn{1});
         field(1) = field(1) + (0.3 * field(3));
         field(3) = field(3) * 0.3;
-        field(4) = field(4) / 2;
+        field(4) = field(4) * 0.5;
         field(2) = field(2) + field(4);
         stats(k).(fn{1}) = field;
     end
