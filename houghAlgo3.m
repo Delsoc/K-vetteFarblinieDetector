@@ -1,12 +1,14 @@
 function [calculatedHeight] = houghAlgo3(RGB)
-    [rows, columns, numberOfColorChannels] = size(RGB);
+    [hoehe,~] = size(RGB);
+    R = RGB(:,:,1);
+    [rows, columns, numberOfColorChannels] = size(R);
     %figure, hold on;
     %converting image to BW
     %RGB= imread("altGelbFilterEineKüvette.jpg");
     
     %X = imread('altGelbFilterEineKüvette.jpg');
     
-    Img2 = RGB;
+    Img2 = R;
     %Img2 = imbinarize(Img2);
     %BW = imcomplement(Img2);
     %figure, hold on, imshow(BW);
@@ -23,9 +25,9 @@ function [calculatedHeight] = houghAlgo3(RGB)
     %figure;
     %%
     [H, theta, rho] = hough(BW);
-    %imshow(imadjust(rescale(H)),'XData',theta,'YData',rho, 'InitialMagnification','fit');
-    %axis on, axis normal, hold on;
-    %colormap(gca,hot);
+    %%%imshow(imadjust(rescale(H)),'XData',theta,'YData',rho, 'InitialMagnification','fit');
+    %%%axis on, axis normal, hold on;
+    %%%colormap(gca,hot);
     
     %% 
     %applying threshold to find points on lines
@@ -33,6 +35,7 @@ function [calculatedHeight] = houghAlgo3(RGB)
     x = theta(P(:,2));
     y = rho(P(:,1));
     lines = houghlines(BW, theta, rho, P, 'FillGap',6,'MinLength',4);
+    RGB = imcrop(RGB, [0 rows*0.25 columns rows*0.75]);
     %%%figure, imshow(RGB), hold on;
     max_len = 0;
     calculatedHeight = 0;
@@ -52,8 +55,8 @@ function [calculatedHeight] = houghAlgo3(RGB)
             %%%plot(xy(:,1),xy(:,2),'LineWidth',2);
         end
 
-        %%%plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
-        %%%plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
+        %plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+        %plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
     
         len = norm(lines(k).point1 - lines(k).point2);
        if ( len > max_len)
@@ -64,6 +67,7 @@ function [calculatedHeight] = houghAlgo3(RGB)
     
     if(calculatedHeight > 0)
         calculatedHeight = calculatedHeight / countedHeightPoints;
+        calculatedHeight = hoehe - calculatedHeight;
     end
 end
 

@@ -23,4 +23,7 @@ V=uint8(V);
 imwrite(H, 'Bild_H.jpg');
 imwrite(S, 'Bild_S.jpg');
 imwrite(V, 'Bild_V.jpg');
+figure, hold on, imshow(H);
+figure, hold on, imshow(S);
+figure, hold on, imshow(V);
 

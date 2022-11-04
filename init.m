@@ -40,10 +40,13 @@ catch
 end
 
 %Matrizen erstellen für die ganzen detektieren höhen und speicher
-%je Algo
+%je Algo 
+completeKuevettenHeight = zeros([length(imagefiles),10]);
 detectedLineHeightMatrixHough = zeros([length(imagefiles),10]);
 detectedLineHeightMatrixRedPlane = zeros([length(imagefiles),10]);
 detectedLineHeightMatrixSaettigung = zeros([length(imagefiles),10]);
+
+save('completeKuevettenHeight.mat','completeKuevettenHeight');
 save('detectedLineHeightMatrixHough.mat','detectedLineHeightMatrixHough');
 save('detectedLineHeightMatrixRedPlane.mat','detectedLineHeightMatrixRedPlane');
 save('detectedLineHeightMatrixSaettigung.mat','detectedLineHeightMatrixSaettigung');

@@ -57,7 +57,7 @@ end
     
 
     
-% Untere kante Finden#
+%Untere kante Finden
 %sucht die kleine weiße linie die immer unten im bild ist
 %setzt alle werte in der scanLinie die nicht im letzten viertel sind auf 0
 %um andere kannten zu unterdrücken

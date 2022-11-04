@@ -1,4 +1,5 @@
 function [detectedHeight] = saettigungsAlgo(RGB)
+    [hoehe,~] = size(RGB);
 
     [H,S,V]=farbbioN(RGB);
     
@@ -6,19 +7,26 @@ function [detectedHeight] = saettigungsAlgo(RGB)
     %figure,imshow(S), hold on;
     %figure,imshow(V), hold on;
 
-    grayImg = im2gray(H);
+    %grayImg = im2gray(S);
+    bw = im2bw(S, 0.9);
     %%%figure, imshow(grayImg);hold on;
-    [hoehe,breite] = size(grayImg);
-    GwertLinie = grayImg(:,round(breite/2));
+    [hoehe,breite] = size(bw);
+    GwertLinie = bw(:,round(breite/2));
     %%%figure, plot(GwertLinie,'r','LineWidth',0.5), hold on;
     
-    for i=60 : length(GwertLinie)
-        copyGwertLinie(i-59,1) = GwertLinie(i,1);
+    for i=80 : length(GwertLinie)
+        copyGwertLinie(i-79,1) = GwertLinie(i,1);
     end
 
+    % gut geeignet für 149 (ohne Gelbfilter und hoher Blasenkante)
+    %for i=120 : length(GwertLinie)
+    %    copyGwertLinie(i-119,1) = GwertLinie(i,1);
+    %end
+
     try
-        indexes = find(copyGwertLinie<copyGwertLinie(1:1)*0.6);
-        detectedHeight = indexes(1:1)+60;
+        indexes = find(copyGwertLinie == 0);
+        detectedHeight = indexes(1:1)+80;
+        detectedHeight = hoehe - detectedHeight;
     catch
         detectedHeight = 0;
     end

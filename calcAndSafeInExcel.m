@@ -6,12 +6,12 @@ function calcAndSafeInExcel(numImages)
     detectedLineHeightMatrixHough = matfile('detectedLineHeightMatrixHough.mat').detectedLineHeightMatrixHough;
     detectedLineHeightMatrixRedPlane = matfile('detectedLineHeightMatrixRedPlane.mat').detectedLineHeightMatrixRedPlane;
     detectedLineHeightMatrixSaettigung = matfile('detectedLineHeightMatrixSaettigung.mat').detectedLineHeightMatrixSaettigung;
-
+    completeKuevettenHeight = matfile('completeKuevettenHeight.mat').completeKuevettenHeight;
 
     durationBetweenImagesInSek = 5 * 60; % TODO: adjust python skript: duration should be writen in name of folder or image
     row = 1;
-    pixelToMillimeter = 0.075;
-    pixelToMikrometer = 75000;
+    pixelToMillimeter = 0.043;
+    pixelToMikrometer = 43000;
     
     lineMovement = 0;
 
@@ -22,27 +22,31 @@ function calcAndSafeInExcel(numImages)
     resultsMatrix = {};
     
     for imgIndex=1:numImages
-        %alle 12 Bilder durchgehen
+        %alle Bilder durchgehen
         for kuevetteIndex=1:10
             %alle Kuevetten durchgehen
-            resultsKuevette = zeros([3,8]);
+            resultsKuevette = zeros([3,9]);
+            completeHeight = completeKuevettenHeight(imgIndex,kuevetteIndex); %in px
             %Hough
             currentHeightHoughInPixel = detectedLineHeightMatrixHough(imgIndex,kuevetteIndex);
             resultsKuevette(1,1) = currentHeightHoughInPixel; %höhe [px]
             resultsKuevette(1,2) = currentHeightHoughInPixel * pixelToMikrometer; %höhe [µm]
             resultsKuevette(1,3) = currentHeightHoughInPixel * pixelToMillimeter; %höhe [mm]
+            resultsKuevette(1,9) = (currentHeightHoughInPixel / completeHeight) * 100; %höhe [%]
 
             %redplane
             currentHeightRedplaneInPixel = detectedLineHeightMatrixRedPlane(imgIndex,kuevetteIndex);
             resultsKuevette(2,1) = currentHeightRedplaneInPixel; %höhe [px]
             resultsKuevette(2,2) = currentHeightRedplaneInPixel * pixelToMikrometer; %höhe [µm]
             resultsKuevette(2,3) = currentHeightRedplaneInPixel * pixelToMillimeter; %höhe [mm]
+            resultsKuevette(2,9) = (currentHeightRedplaneInPixel / completeHeight) * 100; %höhe [%]
 
             %saettigung
             currentHeightSaettigungInPixel = detectedLineHeightMatrixSaettigung(imgIndex,kuevetteIndex);
             resultsKuevette(3,1) = currentHeightSaettigungInPixel; %höhe [px]
             resultsKuevette(3,2) = currentHeightSaettigungInPixel * pixelToMikrometer; %höhe [µm]
             resultsKuevette(3,3) = currentHeightSaettigungInPixel * pixelToMillimeter; %höhe [mm]
+            resultsKuevette(3,9) = (currentHeightSaettigungInPixel / completeHeight) * 100; %höhe [%]
 
             if(imgIndex~=1)
                 %Hough
@@ -96,7 +100,7 @@ function calcAndSafeInExcel(numImages)
             %alle Kuevetten durchgehen
             kuevetteResults = resultsMatrix{imgIndex,kuevetteIndex};
     
-            columnTitles = ["höhe [px]", "höhe [µm]", "höhe [mm]", "Linienwanderung [px]", "Linienwanderung [µm]", "Linienwanderung [mm]", "Geschwindigkeit[µm/sek]", "Geschwindigkeit[mm/sek]"];
+            columnTitles = ["höhe [px]", "höhe [µm]", "höhe [mm]", "Linienwanderung [px]", "Linienwanderung [µm]", "Linienwanderung [mm]", "Geschwindigkeit[µm/sek]", "Geschwindigkeit[mm/sek]", "höhe[%]"];
             imageTitle = strcat("Image ",num2str(imgIndex));
             rowTitles = ["HoughAlgo", "RedPlaneAlgo","heightSaettigungsAlgo"];
             rowTitles = transpose(rowTitles);

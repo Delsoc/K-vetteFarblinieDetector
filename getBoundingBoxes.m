@@ -27,7 +27,7 @@ function [stats,centroids] = cutKuevetten(RGB)
     
     % fill any holes, so that regionprops used to estimate the area
     % enclosed by each of the boundaries
-    bw = imfill(bw, 'holes');
+    %bw = imfill(bw, 'holes');
     %%%figure, hold on;
     %%%imshow(bw);
     %figure;
@@ -35,12 +35,12 @@ function [stats,centroids] = cutKuevetten(RGB)
     % B has the pixelvalues of the boundaries of all the objects
     % L has the pixelvalues of the boundaries INCLUDING what is inside the
     % boundaries
-    [B,L] = bwboundaries(bw, 'noholes');
+    [B,L] = bwboundaries(bw);
     %%%imshow(label2rgb(L,@jet,[.5 .5 .5]));
     %%%hold on
     for k=1:length(B)
         boundary = B{k};
-        %plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 1)
+        %plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 1)[BB(1) BB(2) BB(3) BB(4)]
     end
     %figure;
     

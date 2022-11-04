@@ -18,6 +18,7 @@ Sob_M_F = [0.125000000000000,0.250000000000000,0.125000000000000;
 
 %Entrauscht das bild erst und wendet dann die beiden Sobel an
 GausEntrauscht_EBild = imgaussfilt(E_Bild);
+%GausEntrauscht_EBild = E_Bild;
 Sobel_N = Faltung(GausEntrauscht_EBild,Sob_N_F);
 Sobel_M = Faltung(GausEntrauscht_EBild,Sob_M_F); %Gibt figure 1 aus...
 
