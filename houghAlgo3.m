@@ -18,7 +18,7 @@ function [calculatedHeight] = houghAlgo3(RGB)
     Bimage = imcomplement(Img2);
     %figure, hold on, imshow(Bimage);
     BW = edge(Bimage,'prewitt');
-    BW = imcrop(BW, [0 rows*0.25 columns rows*0.75]);
+    BW = imcrop(BW, [0 rows*0.25 columns rows]);
     %figure, hold on, imshow(Bimage);
     point = 2;
     %%%imshow(Bimage);
@@ -35,7 +35,7 @@ function [calculatedHeight] = houghAlgo3(RGB)
     x = theta(P(:,2));
     y = rho(P(:,1));
     lines = houghlines(BW, theta, rho, P, 'FillGap',6,'MinLength',4);
-    RGB = imcrop(RGB, [0 rows*0.25 columns rows*0.75]);
+    RGB = imcrop(RGB, [0 rows*0.25 columns rows]);
     %%%figure, imshow(RGB), hold on;
     max_len = 0;
     calculatedHeight = 0;
