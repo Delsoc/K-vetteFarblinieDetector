@@ -15,12 +15,12 @@ folderNumber = input(prompt,"s");
 try
     folderFiles = dir(append(versuchsbilderOrdnerName,folderNumber,' ','*'));
     length(folderFiles.name);
+    expInfos =  strsplit(folderFiles.name); % beinhaltet ["Versuchsordnernummer", "Abstände der Bilder in sek", "Anzahl der Bilder"]
     disp(append(" - Ordner '",folderFiles.name, "' gefunden"));
 catch
     disp(append("ERROR: Ein Fehler ist aufgetreten. Sicher, dass der Ordner, mit der Startnummer '", folderNumber, "' ", "im Ordner 'Versuchsbilder' existiert?"));
     return;
 end
-
 %read images
 try
     imagefiles = dir(append(versuchsbilderOrdnerName,folderFiles.name,'\*.jpg'));    

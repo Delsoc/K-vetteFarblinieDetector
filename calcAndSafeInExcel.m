@@ -1,4 +1,4 @@
-function calcAndSafeInExcel(numImages)
+function calcAndSafeInExcel(numImages,durationBetweenImagesInSek)
     %The position of all components required for photography are fixed at
     %all times! the length of 1 pixel was evaluated: 93px = 7mm = 7000µm.
     %1px = 0,075mm = 75000µm
@@ -8,10 +8,9 @@ function calcAndSafeInExcel(numImages)
     detectedLineHeightMatrixSaettigung = matfile('detectedLineHeightMatrixSaettigung.mat').detectedLineHeightMatrixSaettigung;
     completeKuevettenHeight = matfile('completeKuevettenHeight.mat').completeKuevettenHeight;
 
-    durationBetweenImagesInSek = 5 * 60; % TODO: adjust python skript: duration should be writen in name of folder or image
     row = 1;
-    pixelToMillimeter = 0.043;
-    pixelToMikrometer = 43000;
+    pixelToMillimeter = 0.0681;
+    pixelToMikrometer = 68100;
     
     lineMovement = 0;
 

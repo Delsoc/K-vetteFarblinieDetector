@@ -41,7 +41,7 @@ for img=1 : length(images)
     showDetectedLines(undistortedImage, firstStats, centroids, img);
 end
 
-calcAndSafeInExcel(length(images));
+calcAndSafeInExcel(length(images),str2num(expInfos{2}));
 debugPoint = 0;
 
 
