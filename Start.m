@@ -84,7 +84,7 @@ for img=1 : length(images)
     % Nach der Iteration über alle Küvetten eines Bildes, die detektierten
     % Linien der 3 Algorithmen auf 3 separaten Bildern des Probenhalters
     % anzeigen. Die 3 Bilder werden in einem Figure angezeigt.
-    showDetectedLines(undistortedImage, firstStats, centroids, img);
+    showDetectedLines(undistortedImage, firstStats, img);
 end
 
 % Nachdem über alle Bilder iteriert wurde, werden alle ermittelten Höhen
