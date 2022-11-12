@@ -1,4 +1,4 @@
-function [stats,centroids] = cutKuevetten(RGB)
+function [stats,centroids] = getBoundingBoxes(RGB)
 % Rahmenbegrenzungen der einzelnen Küvetten des Bildes
 % ermitteln und zwischenspeichern    
 
