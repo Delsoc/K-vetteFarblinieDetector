@@ -1,53 +1,45 @@
 function [stats,centroids] = cutKuevetten(RGB)
-    %threshold = 0.06; %getestet
-    threshold = 0.07; %getestet
+% Rahmenbegrenzungen der einzelnen Küvetten des Bildes
+% ermitteln und zwischenspeichern    
 
-    %--read image in RGB
-    %%%imshow(RGB);
-    %figure;
+    % Schwellenwert festlegen
+    threshold = 0.07;
 
-    % convert the image to black and white in order to prepare
-    % for boundary tracing using |bwboundaries| 
+    % Bild wird anhand des Schwellenwerts in ein Schwarz-Weiß-Bild
+    % konvertiert
     I = rgb2gray(RGB);
     bw = imbinarize(I, threshold );
-    %%%imshow(bw);
-    %figure;
-    
-    %remove all objects containing fewer than 300 pixels
+
+    % Alle Objekte von dem Schwarz-Weiß-Bild entfernen, die weniger als 300
+    % Pixel groß sind.
     bw = bwareaopen(bw,300);
-    %%%imshow(bw);
-    %figure;
     
-    %fill a gap in the pen's cap
-    se = strel('disk',9); %wenn ich hier den Wert auf 180 mache, dann kriege ich den ganzen Bereich, der mich interessiert als weißen Block
+    % Lücken in dem Schwarz-Weiß-Bild schließen
+    se = strel('disk',9);
     bw = imclose(bw, se);
-    %%%figure, hold on;
-    %%%imshow(bw);
-    %figure;
     
-    % fill any holes, so that regionprops used to estimate the area
-    % enclosed by each of the boundaries
-    %bw = imfill(bw, 'holes');
-    %%%figure, hold on;
-    %%%imshow(bw);
-    %figure;
-
-    % B has the pixelvalues of the boundaries of all the objects
-    % L has the pixelvalues of the boundaries INCLUDING what is inside the
-    % boundaries
+    % Rahmenbegrenzungen ermitteln. 
+    % B hat die Pixelwerte der Grenzen aller Objekte
+    % L hat die Pixelwerte der Grenzen, einschliesslich dessen, was sich 
+    % darin befindet
     [B,L] = bwboundaries(bw);
-    %%%imshow(label2rgb(L,@jet,[.5 .5 .5]));
-    %%%hold on
-    for k=1:length(B)
-        boundary = B{k};
-        %plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 1)[BB(1) BB(2) BB(3) BB(4)]
-    end
-    %figure;
     
-    [bwLabel,num] = bwlabel(bw,8);
-    stats = regionprops(bwLabel, 'BoundingBox');
-    centroids = regionprops(bw,'centroid');
+    % Über alle gefundenen Objekte/Küvetten iterieren
+    for k=1:length(B)
+        % Die Rahmenbegrenzungen der aktuellen Küvette in der Sammlung
+        % boundary speichern
+        boundary = B{k};
+    end
 
-    %%%imshow(RGB);
-    %hold on;
+    % Beschriftungsmatrix des Schwarz-Weiß-Bild erstellen 
+    % (Achter-Verbundenheit)
+    [bwLabel,num] = bwlabel(bw,8);
+    
+    % Die Rahmenbegrenzungen durch regionprops ermitteln und in stats
+    % speichern
+    stats = regionprops(bwLabel, 'BoundingBox');
+    
+    % Die Schwerpunkt der gefundenen Objekte durch regionprops ermitteln 
+    % und in stats speichern
+    centroids = regionprops(bw,'centroid');
 end
