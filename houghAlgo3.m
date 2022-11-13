@@ -3,6 +3,7 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
 % Es wird das Verfahren "Hough-Transformation" angewendet, um die Höhe der
 % gewünschten Linie zu detektieren
     
+    originalRGB = RGB;
     % ggf. Zwischenschritt zeigen
     if showStepsOfKuevette
         figure, hold on;
@@ -87,58 +88,85 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
     % Linien finden
     lines = houghlines(BW, theta, rho, P, 'FillGap',6,'MinLength',4);
     
-    % ggf. Zwischenschritt zeigen
-    if showStepsOfKuevette
-        RGB = imcrop(RGB, [0 rows*0.25 columns rows]);
-        figure, hold on;
-        title('Hough: 7. detektierte Linien durch Hough');
-        imshow(RGB);
-    end
-
     % variablen mit 0 initialisieren
     calculatedHeight = 0;
     countedHeightPoints = 0;
 
-    % Über alle Linien iterieren
-    for k = 1:length(lines)
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure;
+        title('Hough: 7. detektierte Linien durch Hough');
+        imshow(originalRGB);
+        hold on;
 
-        % x- und y-Wert des Anfangs und des Ende der Linie in xy speichern
-        xy = [lines(k).point1; lines(k).point2];
-       
-        % Plot beginnings and ends of lines
-        
-        % Beide Höhen abspeichern
-        y1 = xy(1,2);
-        y2 = xy(2,2);
-
-        % Durchschnittliche Höhe berechnen
-        lineFocusWeight = (y1 + y2)/2;
-
-        if showStepsOfKuevette
+        % Über alle Linien iterieren
+        for k = 1:length(lines)
+    
+            % x- und y-Wert des Anfangs und des Ende der Linie in xy speichern
+            xy = [lines(k).point1; lines(k).point2];
+           
+            % Plot beginnings and ends of lines
+            
+            % Beide Höhen abspeichern
+            y1 = xy(1,2);
+            y2 = xy(2,2);
+    
+            % Durchschnittliche Höhe berechnen
+            lineFocusWeight = (y1 + y2)/2;
+    
             plot(xy(:,1),xy(:,2),'LineWidth',2);
+    
+            if ((lineFocusWeight < (0.90 * rows)) && (lineFocusWeight > (0) * rows))
+                % Bedingung erfüllt, wenn durchschnittliche Höhe der Linie
+                % innerhalb der unteren 90% Höhe des Eingabebildes
+    
+                % Höhe bestimmen/berechnen
+                calculatedHeight = calculatedHeight + lineFocusWeight + rows*0.25;
+    
+                % Anzahl der gefundenen Linien um 1 inkrementieren
+                countedHeightPoints = countedHeightPoints + 1;
+    
+                plot(xy(:,1),xy(:,2),'LineWidth',2);
+                
+            end
+        
+            plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+            plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
+            title('Hough: 7. detektierte Linien durch Hough');
+        
         end
 
-        if ((lineFocusWeight < (0.90 * rows)) && (lineFocusWeight > (0) * rows))
-            % Bedingung erfüllt, wenn durchschnittliche Höhe der Linie
-            % innerhalb der unteren 90% Höhe des Eingabebildes
-
-            % Höhe bestimmen/berechnen
-            calculatedHeight = calculatedHeight + lineFocusWeight + rows*0.25;
-
-            % Anzahl der gefundenen Linien um 1 inkrementieren
-            countedHeightPoints = countedHeightPoints + 1;
-
-            %if showStepsOfKuevette
-                %plot(xy(:,1),xy(:,2),'LineWidth',2);
-            %end
+    else
+        % Über alle Linien iterieren
+        for k = 1:length(lines)
+    
+            % x- und y-Wert des Anfangs und des Ende der Linie in xy speichern
+            xy = [lines(k).point1; lines(k).point2];
+           
+            % Plot beginnings and ends of lines
+            
+            % Beide Höhen abspeichern
+            y1 = xy(1,2);
+            y2 = xy(2,2);
+    
+            % Durchschnittliche Höhe berechnen
+            lineFocusWeight = (y1 + y2)/2;
+    
+            if ((lineFocusWeight < (0.90 * rows)) && (lineFocusWeight > (0) * rows))
+                % Bedingung erfüllt, wenn durchschnittliche Höhe der Linie
+                % innerhalb der unteren 90% Höhe des Eingabebildes
+    
+                % Höhe bestimmen/berechnen
+                calculatedHeight = calculatedHeight + lineFocusWeight + rows*0.25;
+    
+                % Anzahl der gefundenen Linien um 1 inkrementieren
+                countedHeightPoints = countedHeightPoints + 1;
+            end
+        
         end
-    
-        %if showStepsOfKuevette
-            %plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
-            %plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
-        %end
-    
     end
+
+    
     
     if(calculatedHeight > 0)
         % Bedingung erfüllt, wenn Linien gefunden wurden
