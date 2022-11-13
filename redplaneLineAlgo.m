@@ -3,9 +3,6 @@
 % Es wird das Verfahren "Extraktion des Rotkanals" angewendet, um die Höhe 
 % der gewünschten Linie zu detektieren
     
-    % Eingabebild speichern unter original RGB 
-    originalRGB = RGB;
-    
     % ggf. Zwischenschritt zeigen
     if showStepsOfKuevette
         figure, hold on;
@@ -44,20 +41,20 @@
         indexes = find(GwertLinie < 25);
         calculatedHeight = indexes(1:1);
 
+        % ggf. Zwischenschritt zeigen
+        if showStepsOfKuevette
+            figure, imshow(RGB), hold on;
+            [~, breite] = size(RGB);
+            line([0 breite],[calculatedHeight calculatedHeight],'Color','r','LineWidth',2);
+            title('Rotkanal: 4. ermittelte Linie');
+        end
+
         % Höhe korrigieren
         calculatedHeight = hoehe - calculatedHeight;
     catch
         % Falls kein Rotwert unter 25 gefunden werden konnte, wird die Höhe
         % auf 0 gesetzt
         calculatedHeight = 0;
-    end
-
-    % ggf. Zwischenschritt zeigen
-    if showStepsOfKuevette
-        figure, imshow(originalRGB), hold on;
-        [~, breite] = size(originalRGB);
-        line([0 breite],[(calculatedHeight+25) (calculatedHeight+25)],'Color','r','LineWidth',2);
-        title('Rotkanal: 4. ermittelte Linie');
     end
 
 end
