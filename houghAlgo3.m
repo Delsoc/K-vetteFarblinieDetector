@@ -3,7 +3,9 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
 % Es wird das Verfahren "Hough-Transformation" angewendet, um die Höhe der
 % gewünschten Linie zu detektieren
     
+    % Eingabebild speichern unter original RGB 
     originalRGB = RGB;
+
     % ggf. Zwischenschritt zeigen
     if showStepsOfKuevette
         figure, hold on;
@@ -92,9 +94,14 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
     calculatedHeight = 0;
     countedHeightPoints = 0;
 
-    % ggf. Zwischenschritt zeigen
+    
     if showStepsOfKuevette
+        % wenn Zwischenschritte für diese Küvette angezeigt werden sollen,
+        % dann Hier
+
+        % figure für Zwischenschritt erstellen
         figure;
+        originalRGB = imcrop(originalRGB, [0 rows*0.25 columns rows]);
         title('Hough: 7. detektierte Linien durch Hough');
         imshow(originalRGB);
         hold on;
@@ -114,6 +121,7 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
             % Durchschnittliche Höhe berechnen
             lineFocusWeight = (y1 + y2)/2;
     
+            % Zwischenschritt
             plot(xy(:,1),xy(:,2),'LineWidth',2);
     
             if ((lineFocusWeight < (0.90 * rows)) && (lineFocusWeight > (0) * rows))
@@ -125,11 +133,13 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
     
                 % Anzahl der gefundenen Linien um 1 inkrementieren
                 countedHeightPoints = countedHeightPoints + 1;
-    
+                
+                % Zwischenschritt
                 plot(xy(:,1),xy(:,2),'LineWidth',2);
                 
             end
         
+            % Zwischenschritt
             plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
             plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
             title('Hough: 7. detektierte Linien durch Hough');
@@ -137,6 +147,9 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
         end
 
     else
+        % wenn keine Zwischenschritte für diese Küvette angezeigt werden sollen,
+        % dann Hier
+
         % Über alle Linien iterieren
         for k = 1:length(lines)
     
@@ -173,10 +186,21 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
 
         % summierte Höhe durch Anzahl der gefundenen Linien dividieren
         calculatedHeight = calculatedHeight / countedHeightPoints;
-        
+
+        % ggf. Zwischenschritt zeigen
+        if showStepsOfKuevette
+            figure, imshow(RGB), hold on;
+            [~, breite] = size(RGB);
+            line([0 breite],[calculatedHeight calculatedHeight],'Color','r','LineWidth',2);
+            title('Hough: 8. ermittelte Linie');
+        end
+
         % Höhe korrigieren 
         calculatedHeight = hoehe - calculatedHeight;
     end
+    
+
+
 end
 
 
