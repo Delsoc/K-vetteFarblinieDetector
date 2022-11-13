@@ -1,14 +1,8 @@
 % Zerlegung eines Bildes in HSV
 % [H,S,V]=farbbioN(I)
+% Author: Antje Ohlhoff
 
 function [H,S,V]=farbbioN(I)
-
-%%%figure, imshow(I);
-%I=rgb2hsv(I);
-
-%figure, imagesc(I(:,:,1));title('Farbton'); colormap(gray);
-%figure, imagesc(I(:,:,2));title('Sättigung'); colormap(gray);
-%figure, imagesc(I(:,:,3));title('Intensität'); colormap(gray);
 
 H=double(I(:,:,1));
 S=double(I(:,:,2));

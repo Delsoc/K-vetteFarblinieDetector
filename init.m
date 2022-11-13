@@ -15,7 +15,6 @@ close all;
 % Kameraparameter für die Entzerrung werden geladen
 load cameraParams.mat;
 
-
 % definiert, in welchem Ordner sich die Versuchsordner befinden
 versuchsbilderOrdnerName = "Versuchsbilder\";
 
@@ -24,6 +23,20 @@ versuchsbilderOrdnerName = "Versuchsbilder\";
 prompt = "Mit welcher Nummer fängt der Ordner an, der die Versuchsbilder beinhaltet? ";
 folderNumber = input(prompt,"s");
 
+% der Benutzer wird nach der Nummer des Bildes gefragt, in der die Küvette 
+% enthalten ist, die die Küvette enthält, für die die Auswertungsschritte 
+% der verschiedenen Verfahren angezeigt werden sollen. 
+% Die Nummer wird zwischengespeichert.
+prompt = "In welchem Bild befindet sich die Küvette, dessen " + ...
+    "Zwischenschritte in den Algorithmen angezeigt werden sollen? (Nummer eingeben..) ";
+imageNumber = str2num(input(prompt,"s"));
+
+% der Benutzer wird nach der Nummer der Küvette im Bild gefragt für die die 
+% Auswertungsschritte der verschiedenen Verfahren angezeigt werden sollen. 
+% Die Nummer wird zwischengespeichert.
+prompt = "Für welche Küvette in dem Bild sollen die Zwischenschritte in den " + ...
+    "Algorithmen angezeigt werden? (Nummer eingeben von 1 bis 10) ";
+kuevetteNumber = str2num(input(prompt,"s"));
 
 try
     % Der gewünschte Versuchsordner wird gesucht und in folderFiles

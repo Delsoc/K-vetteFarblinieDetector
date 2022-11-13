@@ -69,7 +69,7 @@ function showDetectedLines(image, stats, imgIndex)
         lineHeight = bottomHeightKuevette - currentHeightInPixel;
 
         % Linie an der Position der Küvette in dem Bild zeichnen
-        line([BB(1) BB(1)+BB(3)],[lineHeight lineHeight],'Color','b','LineWidth',1);
+        line([BB(1) BB(1)+BB(3)],[lineHeight lineHeight],'Color','r','LineWidth',1);
     end
 
     % Bild mit den detektierten Linien des Verfahrens 
@@ -98,6 +98,6 @@ function showDetectedLines(image, stats, imgIndex)
         lineHeight = bottomHeightKuevette - currentHeightInPixel;
 
         % Linie an der Position der Küvette in dem Bild zeichnen
-        line([BB(1) BB(1)+BB(3)],[lineHeight lineHeight],'Color','g','LineWidth',1);
+        line([BB(1) BB(1)+BB(3)],[lineHeight lineHeight],'Color','r','LineWidth',1);
     end
 end

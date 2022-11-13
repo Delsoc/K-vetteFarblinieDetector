@@ -1,4 +1,4 @@
-function [detectedHeight] = saettigungsAlgo(RGB)
+function [detectedHeight] = saettigungsAlgo(RGB, showStepsOfKuevette)
 % Diese Funktion erwartet als Eingabe das ausgeschnittene Bild der Küvette.
 % Es wird das Verfahren "Extraktion des Sättigungsbildes" angewendet, um die Höhe 
 % der gewünschten Linie zu detektieren

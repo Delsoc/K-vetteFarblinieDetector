@@ -1,4 +1,4 @@
- function [calculatedHeight] = redplaneLineAlgo(RGB)
+ function [calculatedHeight] = redplaneLineAlgo(RGB, showStepsOfKuevette)
 % Diese Funktion erwartet als Eingabe das ausgeschnittene Bild der Küvette.
 % Es wird das Verfahren "Extraktion des Rotkanals" angewendet, um die Höhe 
 % der gewünschten Linie zu detektieren

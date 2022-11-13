@@ -1,8 +1,15 @@
-function [calculatedHeight] = houghAlgo3(RGB)
+function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
 % Diese Funktion erwartet als Eingabe das ausgeschnittene Bild der Küvette.
 % Es wird das Verfahren "Hough-Transformation" angewendet, um die Höhe der
 % gewünschten Linie zu detektieren
     
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Hough: 1. Eingabebild');
+        imshow(RGB);
+    end
+
     % Die Höhe des Eingabebildes wird ausgelesen
     [hoehe,~] = size(RGB);
 
@@ -10,24 +17,26 @@ function [calculatedHeight] = houghAlgo3(RGB)
     % extrahiert wird
     R = RGB(:,:,1);
 
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Hough: 2. Rotkanal extrahieren');
+        imshow(R);
+    end
+
     % Die Anzahl der Zeilen und Spalten des Bildes wird ausgelesen
     [rows, columns, ~] = size(R);
 
-    %figure, hold on;
-    %converting image to BW
-    %RGB= imread("altGelbFilterEineKüvette.jpg");
-    
-    %X = imread('altGelbFilterEineKüvette.jpg');
-    
-    %Img2 = imbinarize(Img2);
-    %BW = imcomplement(Img2);
-    %figure, hold on, imshow(BW);
-    %BW = Img2;
-    %%%imshow(BW);
-    %Bimage = im2bw(Img2, 0.8); %%0.8 interessant
 
     % Das Komplementärbild wird erstellt
     Bimage = imcomplement(R);
+
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Hough: 3. Komplementärbild erstellen');
+        imshow(Bimage);
+    end
 
     %figure, hold on, imshow(Bimage);
 
@@ -35,21 +44,36 @@ function [calculatedHeight] = houghAlgo3(RGB)
     % somit ein Kantenbild erstellt
     BW = edge(Bimage,'prewitt');
 
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Hough: 4. Kantenbild durch Prewitt-Operator');
+        imshow(BW);
+    end
+
     % Das Kantenbild wird in der Höhe um 25% gekürzt
     BW = imcrop(BW, [0 rows*0.25 columns rows]);
 
-    %figure, hold on, imshow(Bimage);
-    %%%imshow(Bimage);
-    %figure;
-    %%
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Hough: 5. Kantenbild schneiden/eingrenzen');
+        imshow(BW);
+    end
 
     % Hough-Transformation wird angewendet und H, theta, rho
     % zwischengespeichert
     [H, theta, rho] = hough(BW);
 
-    %%%imshow(imadjust(rescale(H)),'XData',theta,'YData',rho, 'InitialMagnification','fit');
-    %%%axis on, axis normal, hold on;
-    %%%colormap(gca,hot);
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Hough: 6. Hough Transformation');
+        imshow(imadjust(rescale(H)),'XData',theta,'YData',rho, 'InitialMagnification','fit');
+        axis on, axis normal, hold on;
+        colormap(gca,hot);
+    end
+
     
     % Houghpeaks finden
     P = houghpeaks(H,3,'threshold',ceil(0.5*max(H(:))));
@@ -63,9 +87,14 @@ function [calculatedHeight] = houghAlgo3(RGB)
     % Linien finden
     lines = houghlines(BW, theta, rho, P, 'FillGap',6,'MinLength',4);
     
-    % RGB = imcrop(RGB, [0 rows*0.25 columns rows]);
-    %%%figure, imshow(RGB), hold on;
-    
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        RGB = imcrop(RGB, [0 rows*0.25 columns rows]);
+        figure, hold on;
+        title('Hough: 7. detektierte Linien durch Hough');
+        imshow(RGB);
+    end
+
     % variablen mit 0 initialisieren
     calculatedHeight = 0;
     countedHeightPoints = 0;
@@ -85,7 +114,9 @@ function [calculatedHeight] = houghAlgo3(RGB)
         % Durchschnittliche Höhe berechnen
         lineFocusWeight = (y1 + y2)/2;
 
-        %%%plot(xy(:,1),xy(:,2),'LineWidth',2);
+        if showStepsOfKuevette
+            plot(xy(:,1),xy(:,2),'LineWidth',2);
+        end
 
         if ((lineFocusWeight < (0.90 * rows)) && (lineFocusWeight > (0) * rows))
             % Bedingung erfüllt, wenn durchschnittliche Höhe der Linie
@@ -97,11 +128,15 @@ function [calculatedHeight] = houghAlgo3(RGB)
             % Anzahl der gefundenen Linien um 1 inkrementieren
             countedHeightPoints = countedHeightPoints + 1;
 
-            %%%plot(xy(:,1),xy(:,2),'LineWidth',2);
+            %if showStepsOfKuevette
+                %plot(xy(:,1),xy(:,2),'LineWidth',2);
+            %end
         end
-
-        %plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
-        %plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
+    
+        %if showStepsOfKuevette
+            %plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+            %plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color', 'red');
+        %end
     
     end
     
