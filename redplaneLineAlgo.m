@@ -2,23 +2,40 @@
 % Diese Funktion erwartet als Eingabe das ausgeschnittene Bild der Küvette.
 % Es wird das Verfahren "Extraktion des Rotkanals" angewendet, um die Höhe 
 % der gewünschten Linie zu detektieren
+    
+    % Eingabebild speichern unter original RGB 
+    originalRGB = RGB;
+    
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Rotkanal: 1. Eingabebild');
+        imshow(RGB);
+    end
 
     % Das Eingabe Bild in ein Grauwertbild konvertieren, indem der Rotkanal
     % extrahiert wird
     R = RGB(:,:,1);
 
-    %image(R), colormap([[0:1/255:1]', zeros(256,1), zeros(256,1)]), colorbar;
-    %%%figure; hold on; imshow(R); 
-
-
-
-    %figure, imshow(R);hold on;
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        title('Rotkanal: 2. Rotkanal extrahieren');
+        imshow(R);
+    end
 
     % Höhe und Breite des Bildes ermitteln und zwischenspeichern
     [hoehe,breite] = size(R);
 
     % Grauwertlinie vertikal durch die Mitte der Küvette erstellen
     GwertLinie = R(:,round(breite/2));
+
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, hold on;
+        plot(GwertLinie,'r','LineWidth',0.5)
+        title('Rotkanal: 3. Grauwertlinie erstellen');
+    end
 
 
     try
@@ -34,6 +51,15 @@
         % auf 0 gesetzt
         calculatedHeight = 0;
     end
+
+    % ggf. Zwischenschritt zeigen
+    if showStepsOfKuevette
+        figure, imshow(originalRGB), hold on;
+        [~, breite] = size(originalRGB);
+        line([0 breite],[(calculatedHeight+25) (calculatedHeight+25)],'Color','r','LineWidth',2);
+        title('Rotkanal: 4. ermittelte Linie');
+    end
+
 end
 
 
