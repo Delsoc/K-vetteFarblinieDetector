@@ -50,7 +50,6 @@ for img=1 : length(images)
         % zwischengespeichert, welche jedoch mit den unangepassten
         % Rahmenbegrenzungen ausgeschnitten wurde
         [completeHeight, completeWidth] = size(croppedUndistortedImages{croppedImg});
-        %figure, hold on, imshow(croppedUndistortedImages{croppedImg});
 
         % Zeilen und Spalten bzw. Höhe und Breite der aktuellen Küvette 
         % (ausgeschnitten mit den angepassten Rahmenbegrenzungen) 
@@ -60,27 +59,16 @@ for img=1 : length(images)
         % houghAlgo - aktuelle Küvette in den Algorithmus 
         % "Houghtransformation" geben und die ermittelte Höhe zwischenspeichern
         calculatedHeightHough = houghAlgo3(recroppedUndistortedImages{croppedImg}, showStepsOfKuevette);
-        %%%line([0 columns],[calculatedHeightHough calculatedHeightHough],'Color','r','LineWidth',2);
-        %%%figure, imshow(croppedUndistortedImages{croppedImg}), hold on;
-        %%%line([0 columns],[calculatedHeightHough calculatedHeightHough],'Color','r','LineWidth',2);
         
         % redPlaneAlgo - aktuelle Küvette in den Algorithmus 
         % "Extraktion des Rotkanals" geben und die ermittelte Höhe 
         % zwischenspeichern
         calculatedHeightRedPlane = redplaneLineAlgo(recroppedUndistortedImages{croppedImg}, showStepsOfKuevette);
-        %%%figure, imshow(croppedMoreYellowImages{croppedImg}), hold on;
-        %%%line([0 columns],[calculatedHeightRedPlane calculatedHeightRedPlane],'Color','b','LineWidth',2);
-        %%%figure, imshow(croppedUndistortedImages{croppedImg}), hold on;
-        %%%line([0 columns],[calculatedHeightRedPlane calculatedHeightRedPlane],'Color','b','LineWidth',2);
         
         % saettigungsAlgo - aktuelle Küvette in den Algorithmus 
         % "Extraktion des Sättigungsalgorithmus" geben und die ermittelte 
         % Höhe zwischenspeichern
         calculatedHeightSaettigungsAlgo = saettigungsAlgo(recroppedUndistortedImages{croppedImg}, showStepsOfKuevette);
-        %%%figure, imshow(croppedUndistortedImages{croppedImg}), hold on;
-        %%%line([0 columns],[calculatedHeightSaettigungsAlgo calculatedHeightSaettigungsAlgo],'Color','g','LineWidth',2);
-        %%%figure, imshow(croppedMoreYellowImages{croppedImg}), hold on;
-        %%%line([0 columns],[calculatedHeightSaettigungsAlgo calculatedHeightSaettigungsAlgo],'Color','g','LineWidth',2);
         
         % ermittelte Höhen der aktuellen Küvette pro Algorithmus in jeweils
         % eine Matrix zwischenspeichern. Außerdem komplette Höhe der
@@ -92,11 +80,11 @@ for img=1 : length(images)
     % Nach der Iteration über alle Küvetten eines Bildes, die detektierten
     % Linien der 3 Algorithmen auf 3 separaten Bildern des Probenhalters
     % anzeigen. Die 3 Bilder werden in einem Figure angezeigt.
-    %%%showDetectedLines(undistortedImage, firstStats, img);
+    showDetectedLines(undistortedImage, firstStats, img);
 end
 
 % Nachdem über alle Bilder iteriert wurde, werden alle ermittelten Höhen
 % ausgewertet, bestimmte Größen berechnet und in den Excel-File
 % "results.xlsx" geschrieben in einer Tabellenform.
-%%%calcAndSafeInExcel(length(images),str2num(expInfos{2}));
+calcAndSafeInExcel(length(images),str2num(expInfos{2}));
 

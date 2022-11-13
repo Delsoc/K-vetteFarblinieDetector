@@ -3,9 +3,6 @@ function [detectedHeight] = saettigungsAlgo(RGB, showStepsOfKuevette)
 % Es wird das Verfahren "Extraktion des Sättigungsbildes" angewendet, um die Höhe 
 % der gewünschten Linie zu detektieren
 
-    % Eingabebild speichern unter original RGB 
-    originalRGB = RGB;
-
     % ggf. Zwischenschritt zeigen
     if showStepsOfKuevette
         figure, hold on;
@@ -21,7 +18,7 @@ function [detectedHeight] = saettigungsAlgo(RGB, showStepsOfKuevette)
     if showStepsOfKuevette
         figure, hold on;
         title('Sättigung: 2. Sättigungsbild extrahieren');
-        imshow(RGB);
+        imshow(S);
     end
 
     % Sättigungsbild in ein Schwart-Weiß-Bild konvertieren
@@ -31,7 +28,7 @@ function [detectedHeight] = saettigungsAlgo(RGB, showStepsOfKuevette)
     if showStepsOfKuevette
         figure, hold on;
         title('Sättigung: 3. Schwarz-Weiß-Bild erstellen');
-        imshow(RGB);
+        imshow(bw);
     end
 
     % Höhe und Breite des Bildes ermitteln und speichern
@@ -55,7 +52,7 @@ function [detectedHeight] = saettigungsAlgo(RGB, showStepsOfKuevette)
     % ggf. Zwischenschritt zeigen
     if showStepsOfKuevette
         figure, hold on;
-        plot(GwertLinie,'r','LineWidth',0.5)
+        plot(copyGwertLinie,'r','LineWidth',0.5)
         title('Sättigung: 5. Grauwertlinie anpassen');
     end
 

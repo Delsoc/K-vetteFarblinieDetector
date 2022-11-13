@@ -41,8 +41,6 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
         imshow(Bimage);
     end
 
-    %figure, hold on, imshow(Bimage);
-
     % Auf das Komplementärbild wird der Prewitt-Operator angewendet und
     % somit ein Kantenbild erstellt
     BW = edge(Bimage,'prewitt');
@@ -199,8 +197,6 @@ function [calculatedHeight] = houghAlgo3(RGB, showStepsOfKuevette)
         calculatedHeight = hoehe - calculatedHeight;
     end
     
-
-
 end
 
 
