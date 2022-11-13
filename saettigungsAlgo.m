@@ -7,24 +7,14 @@ function [detectedHeight] = saettigungsAlgo(RGB)
     % und zwischenspeichern
     [H,S,V]=farbbioN(RGB);
     
-    %figure,imshow(H), hold on;
-    %figure,imshow(S), hold on;
-    %figure,imshow(V), hold on;
-
-    %grayImg = im2gray(S);
-
     % Sättigungsbild in ein Schwart-Weiß-Bild konvertieren
     bw = im2bw(S, 0.9);
-    
-    %%%figure, imshow(grayImg);hold on;
 
     % Höhe und Breite des Bildes ermitteln und speichern
     [hoehe,breite] = size(bw);
 
     % Grauwertlinie vertikal durch die Mitte der Küvette erstellen
     GwertLinie = bw(:,round(breite/2));
-    
-    %%%figure, plot(GwertLinie,'r','LineWidth',0.5), hold on;
     
     % Die Grauwertlinie um die ersten 80 Pixel verkürzen
     for i=80 : length(GwertLinie)

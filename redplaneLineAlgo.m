@@ -7,13 +7,6 @@
     % extrahiert wird
     R = RGB(:,:,1);
 
-    %image(R), colormap([[0:1/255:1]', zeros(256,1), zeros(256,1)]), colorbar;
-    %%%figure; hold on; imshow(R); 
-
-
-
-    %figure, imshow(R);hold on;
-
     % Höhe und Breite des Bildes ermitteln und zwischenspeichern
     [hoehe,breite] = size(R);
 
